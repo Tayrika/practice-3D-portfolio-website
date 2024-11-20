@@ -1,6 +1,9 @@
 import './style.css'
 
 import * as THREE from 'three';
+
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 // Always need 3 objects: 1. Scene, 2. Camera, 3. Renderer
 const scene = new THREE.Scene(); // Container 
 
@@ -31,6 +34,10 @@ scene.add(pointLight, ambientLight);
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper, gridHelper);
+
+// Listens to the events on the mouse and updates the camera position accordingly 
+const controls = new OrbitControls(camera, renderer.domElement);
+
 // Game loop
 function animate() {
   requestAnimationFrame( animate );
@@ -38,6 +45,8 @@ function animate() {
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;
+
+  controls.update(); // Reflect changes of the camera position 
 
   renderer.render( scene, camera );
 }
